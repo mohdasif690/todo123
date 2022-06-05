@@ -17,6 +17,7 @@ class FirebaseApi {
       .collection('todo')
       .orderBy(TodoField.createdTime, descending: true)
       .snapshots()
+      // .transform(Utils.transformer((json) => Todo.fromJson(json)));
       .transform(Utils.transformer(Todo.fromJson));
 
   static Future updateTodo(Todo todo) async {
