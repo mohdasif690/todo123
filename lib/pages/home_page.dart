@@ -49,7 +49,7 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       body: StreamBuilder<List<Todo>>(
-        stream: FirebaseApi.readTodos(),
+        // stream: FirebaseApi.readTodos(),
         builder: (context, snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:

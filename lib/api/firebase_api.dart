@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:todo123/utils.dart';
 
@@ -13,12 +15,12 @@ class FirebaseApi {
     return docTodo.id;
   }
 
-  static Stream<List<Todo>> readTodos() => FirebaseFirestore.instance
+  static Stream readTodos() => FirebaseFirestore.instance
       .collection('todo')
       .orderBy(TodoField.createdTime, descending: true)
-      .snapshots()
-      // .transform(Utils.transformer((json) => Todo.fromJson(json)));
-      .transform(Utils.transformer(Todo.fromJson));
+      .snapshots();
+  // .transform(Utils.transformer((json) => Todo.fromJson(json)));
+  // .transform(Utils.transformer(Todo.fromJson));
 
   static Future updateTodo(Todo todo) async {
     final docTodo = FirebaseFirestore.instance.collection('todo').doc(todo.id);
