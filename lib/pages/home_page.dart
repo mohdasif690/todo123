@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:provider/provider.dart';
-
 import '../api/firebase_api.dart';
 import '../model.dart/todo.dart';
 import '../providers/todos.dart';
@@ -11,6 +8,8 @@ import '../widgets/completed_list_widget.dart';
 import '../widgets/todo_list_widget.dart';
 
 class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
+
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -27,7 +26,7 @@ class _HomePageState extends State<HomePage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Todo App'),
+        title: const Text('Todo App'),
       ),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Theme.of(context).primaryColor,
@@ -37,7 +36,7 @@ class _HomePageState extends State<HomePage> {
         onTap: (index) => setState(() {
           selectedIndex = index;
         }),
-        items: [
+        items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.fact_check_outlined),
             label: 'Todos',
@@ -49,21 +48,21 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       body: StreamBuilder<List<Todo>>(
-        //  stream: FirebaseApi.readTodos(),
+        stream: FirebaseApi.readTodos(),
         builder: (context, snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:
-              return Center(child: CircularProgressIndicator());
+              return const Center(child: CircularProgressIndicator());
             default:
-              if (snapshot.hasError) {
-                return buildText('Something Went Wrong Try later');
-              } else {
+              if (snapshot.hasData) {
                 final todos = snapshot.data;
 
                 final provider = Provider.of<TodosProvider>(context);
                 provider.setTodos(todos!);
 
                 return tabs[selectedIndex];
+              } else {
+                return buildText('Something Went Wrong Try later');
               }
           }
         },
@@ -78,7 +77,7 @@ class _HomePageState extends State<HomePage> {
           builder: (context) => AddTodoDialogWidget(),
           barrierDismissible: false,
         ),
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
     );
   }
@@ -87,6 +86,6 @@ class _HomePageState extends State<HomePage> {
 Widget buildText(String text) => Center(
       child: Text(
         text,
-        style: TextStyle(fontSize: 24, color: Colors.white),
+        style: const TextStyle(fontSize: 24, color: Colors.white),
       ),
     );
