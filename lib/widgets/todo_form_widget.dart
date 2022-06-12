@@ -85,7 +85,19 @@ class _TodoFormWidgetState extends State<TodoFormWidget> {
         onTap: () {
           uploadImage(context);
         },
-        child: Container(height: 50, width: 50, color: Colors.red),
+        child: Container(
+          height: 50,
+          width: 100,
+          decoration: BoxDecoration(
+              shape: BoxShape.rectangle,
+              borderRadius: BorderRadius.circular(5),
+              color: Colors.amber),
+          child: Center(
+              child: Text(
+            'select image',
+            style: TextStyle(color: Colors.white),
+          )),
+        ),
       );
 
   Widget buildButton() => SizedBox(
